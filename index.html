@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грузим чашечки</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #2c2c2c;
+    font-family: Georgia, serif;
+    color: #e8e0d6;
+  }
+  .container {
+    text-align: center;
+    width: 340px;
+  }
+  .cup-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .cup-wrapper svg {
+    width: 260px;
+    height: 180px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+  }
+  h1 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    letter-spacing: .05em;
+    margin-bottom: 18px;
+    opacity: .85;
+  }
+  .bar-track {
+    width: 100%;
+    height: 10px;
+    background: #444;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c9b99a, #f5efe6);
+    border-radius: 5px;
+    transition: width .3s ease;
+  }
+  .percent {
+    margin-top: 10px;
+    font-size: .95rem;
+    font-variant-numeric: tabular-nums;
+    opacity: .7;
+  }
+  .done-msg {
+    display: none;
+    margin-top: 14px;
+    font-size: 1rem;
+    color: #c9b99a;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Грузим чашечки&hellip;</h1>
+
+  <div class="cup-wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 300">
+        <style>
+            :root { --sine: cubic-bezier(0.37, 0, 0.63, 1); }
+            .porcelain { fill: white }
+            #handle-x { animation: hx 2s var(--sine) infinite alternate }
+            @keyframes hx { from { transform: translateX(0px)} to { transform: translateX(380px)} }
+            #handle-y { animation: hy 2s var(--sine) -1s infinite alternate }
+            @keyframes hy { from { transform: translateY(-15px) } to { transform: translateY(15px)} }
+            #handle-shape { transform-box: fill-box; transform-origin: 0% 50%; animation: hs 2s var(--sine) infinite alternate }
+            @keyframes hs { from { transform: scaleX(1); } to { transform: scaleX(-1)} }
+            #cup-silhouette { animation: hide-behind 4s step-end infinite}
+            @keyframes hide-behind {
+              0%   { opacity: 0; }  /* передняя половина: ручка видна целиком */
+              50%  { opacity: 1; }  /* задняя половина: корпус прячет ручку */
+              100% { opacity: 0; }
+            }
+            #handle-edge { animation: edge-fade 2s infinite}
+            @keyframes edge-fade {
+              0%, 40%  { opacity: 0; }
+              45%, 55% { opacity: 1; }
+              60%, 100%{ opacity: 0; }
+            }
+        </style>
+
+        <defs>
+            <mask id="behind-cup"> <!-- размеры вашего viewBox -->
+                <rect x="0" y="0" width="380" height="300" fill="white"/>
+                <path id="cup-silhouette" d="M 199 25 C 265 25 319 30 319 37 L 298 175 H 82 L 79 37 C 79 30 133 25 199 25 Z" fill="black"/>
+            </mask>
+        </defs>
+
+        <g mask="url(#behind-cup)">
+            <g id="handle-x"><g id="handle-y">
+                <path id="handle-edge" class="porcelain" d="M 0 17 C 5 22 3 87 2 99 S -1 111 -2 99 S -5 22 0 17 Z"/>
+                <g id="handle-shape">
+                    <path id="handle" class="porcelain" d="M 42 125 C 41 121 48 118 51 122 C 65 136 70 118 61 112 C 40 97 0 99 0 61 C 0 -16 107 30 56 38 C 49 39 53 28 48 24 C 37 16 12 31 17 64 C 23 105 56 90 68 110 C 80 141 44 141 42 125 H 42 Z" />
+                </g>
+            </g></g>
+        </g>
+
+        <path id="mug-left-contour" class="porcelain"  d="M 50 35 C 66 50 73 71 74 93 C 75 117 71 139 85 154 C 107 177 144 193 146 230 C 160 194 142 163 110 143 C 100 137 89 125 86 98 C 83 59 72 58 50 35 H 50 Z" />
+        <use href="#mug-left-contour" transform="translate(385) scale(-1 1)" />
+        <path id="mug-rim" class="porcelain"  d="M 265 56 C 227 57 126 60 78 45 C 131 71 256 63 265 56 Z" />
+        <path id="mug-cavity" class="porcelain"  d="M 199 25 C 265 25 319 30 319 37 C 319 43 265 48 199 48 C 133 48 79 43 79 37 C 79 30 133 25 199 25 Z" />
+        <path id="mug-base" class="porcelain" fill="cyan" d="M 239 249 C 220 256 135 256 132 233 C 131 226 113 247 122 249 C 178 267 249 253 258 249 C 264 247 252 234 250 241 S 243 248 239 249 Z" />
+        <path id="saucer" class="porcelain"  d="M 97 225 C 50 230 9 238 9 254 C 9 271 71 292 195 292 C 309 292 371 271 371 254 C 371 238 330 230 283 225 C 308 226 376 229 376 258 C 376 276 304 300 195 300 C 76 300 4 276 4 258 C 4 229 74 226 97 225 H 97 Z" />
+</svg>
+  </div>
+
+  <div class="bar-track"><div class="bar-fill" id="fill"></div></div>
+  <div class="percent" id="pct">0 %</div>
+  <div class="done-msg" id="done">Чашечки загружены!</div>
+</div>
+
+<script>
+  const fill = document.getElementById('fill');
+  const pct  = document.getElementById('pct');
+  const done = document.getElementById('done');
+  const h1   = document.querySelector('h1');
+  let progress = 0;
+
+  const iv = setInterval(() => {
+    progress += Math.random() * 3 + 0.5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(iv);
+      h1.textContent = 'Готово!';
+      done.style.display = 'block';
+    }
+    fill.style.width = progress + '%';
+    pct.textContent  = Math.floor(progress) + ' %';
+  }, 200);
+</script>
+</body>
+</html>
