@@ -3,281 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Грузим чашечки</title>
+<title>SVG Experiments</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: #2c2c2c;
     font-family: Georgia, serif;
-    color: #e8e0d6;
   }
-  .container {
-    text-align: center;
-    width: 340px;
-  }
-  .cup-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-  .cup-wrapper svg {
-    width: 260px;
-    height: 180px;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
-  }
-  h1 {
-    font-size: 1.1rem;
-    font-weight: normal;
-    letter-spacing: .05em;
-    margin-bottom: 18px;
-    opacity: .85;
-  }
-  .bar-track {
-    width: 100%;
-    height: 10px;
-    background: #444;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 20px;
-  }
-  .bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #c9b99a, #f5efe6);
-    border-radius: 5px;
-    transition: width .3s ease;
-  }
-  .percent {
-    margin-top: 10px;
+  .nav-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #c9b99a;
+    color: #2c2c2c;
+    text-decoration: none;
+    font-family: Georgia, serif;
     font-size: .95rem;
-    font-variant-numeric: tabular-nums;
-    opacity: .7;
+    border-radius: 5px;
+    transition: background .2s;
   }
-  .done-msg {
-    display: none;
-    margin-top: 14px;
-    font-size: 1rem;
-    color: #c9b99a;
+  .nav-btn:hover {
+    background: #f5efe6;
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Грузим чашечки&hellip;</h1>
-
-  <div class="cup-wrapper">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 300">
-        <style>
-            :root { --sine: cubic-bezier(0.37, 0, 0.63, 1); }
-            .logo {
-                background: grey
-            }
-            .porcelain {
-                fill: white
-            }
-
-            #handle-x {
-              animation: hx 2s var(--sine) infinite alternate;
-            }
-            @keyframes hx {
-              from { transform: translateX(0px); }
-              to   { transform: translateX(380px); }
-            }
-
-            #handle-y {
-              animation: hy 2s var(--sine) -1s infinite alternate;
-            }
-            @keyframes hy {
-              from { transform: translateY(-15px); }
-              to   { transform: translateY(15px); }
-            }
-
-            #handle-shape {
-              transform-box: fill-box;
-              transform-origin: 0% 50%;
-              animation: hs 2s var(--sine) infinite alternate;
-            }
-            @keyframes hs {
-              from { transform: scaleX(1); }
-              to   { transform: scaleX(-1); }
-            }
-
-            #cup-silhouette {
-              animation: hide-behind 4s step-end infinite;
-            }
-            @keyframes hide-behind {
-              0%   { opacity: 0; }
-              50%  { opacity: 1; }
-              100% { opacity: 0; }
-            }
-
-            #handle-edge {
-              animation: edge-fade 2s infinite;
-            }
-            @keyframes edge-fade {
-              0%, 40%  { opacity: 0; }
-              45%, 55% { opacity: 1; }
-              60%, 100%{ opacity: 0; }
-            }
-
-            #pattern-strip {
-              animation: spin-pattern 8s linear infinite;
-            }
-            @keyframes spin-pattern {
-              from { transform: translateX(0); }
-              to   { transform: translateX(1508px); }
-            }
-        </style>
-
-        <defs>
-          <symbol id="isaac" viewBox="0 0 100 100">
-            <g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="isaac-cathedral">
-              <g id="dome">
-                <path id="isaac-cross" d="M 50.4 12.6 V 8.5 M 49.3 9.8 H 51.5 Z" />
-                <path id="dome-roof" d="M 37.5 43.6 L 37.5 44.2 L 37.1 44.2 C 37 44.2 36.9 44.1 36.9 43.9 L 36.9 42.1 L 36.5 42.1 C 36.4 42.1 36.3 42 36.3 41.8 L 36.3 40.5 C 36.3 40.3 36.4 40.2 36.5 40.2 L 37.6 40.2 L 37.6 39.1 C 37.6 38.9 37.7 38.8 37.9 38.8 L 39.6 38.8 L 39.6 32.9 C 39.6 32.8 39.7 32.6 39.9 32.6 L 40.3 32.6 C 40.5 31.2 41.3 24.7 47.6 21.1 L 47.6 20.5 C 47.6 20.3 47.7 20.2 47.9 20.2 L 48 20.2 L 48 17.2 L 47.9 17.2 C 47.8 17.2 47.7 17.1 47.7 16.9 L 47.7 15.4 C 47.7 15.2 47.8 15.1 47.9 15.1 L 48.2 15.1 C 48.2 14.6 48.3 13.8 49 13.1 C 49.3 12.7 49.9 12.6 50.4 12.6 C 50.9 12.6 51.4 12.7 51.8 13.1 C 52.5 13.8 52.6 14.6 52.6 15.1 L 52.9 15.1 C 53 15.1 53.1 15.2 53.1 15.4 L 53.1 16.9 C 53.1 17.1 53 17.2 52.9 17.2 L 52.8 17.2 L 52.8 20.2 L 52.9 20.2 C 53 20.2 53.2 20.3 53.2 20.5 L 53.2 21.1 C 59.5 24.7 60.3 31.1 60.4 32.6 L 60.9 32.6 C 61 32.6 61.2 32.7 61.2 32.9 L 61.2 38.7 L 62.9 38.7 C 63 38.7 63.2 38.9 63.2 39.1 L 63.2 40.2 L 64.3 40.2 C 64.4 40.2 64.5 40.3 64.5 40.5 L 64.5 41.8 C 64.5 41.9 64.4 42.1 64.3 42.1 L 63.9 42.1 L 63.9 43.9 C 63.9 44.1 63.7 44.2 63.6 44.2 Z"/>
-                <rect id="dome-crossbar" height="0.6" width="25.6" x="37.7" y="43.6"/>
-                <rect id="dome-bottom-portico" height="0.6" width="21" x="40" y="39"/>
-                <rect id="dome-top-portico" height="0.6" width="19.6" x="40.5" y="32.8"/>
-              </g>
-              <g id="colonade">
-                  <rect id="column" height="11" width="0.2" x="37.2" y="44.5"/>
-                  <use href="#column" x="6.5"/>
-                  <use href="#column" x="13"/>
-                  <use href="#column" x="19.5"/>
-                  <use href="#column" x="26"/>
-              </g>
-              <rect id="colonade-crossbar" height="0.6" width="30" x="35.3" y="56.9"/>
-              <rect id="basement" height="0.6" width="99.6" x="0.2" y="98.7"/>
-              <rect id="entablature" height="1" width="42.7" x="29" y="73.3" />
-              <g id="big-colonade">
-                  <rect id="big-column" height="21" width="1" x="30.7" y="76.5" />
-                  <use href="#big-column" x="5.5"/>
-                  <use href="#big-column" x="11"/>
-                  <use href="#big-column" x="16.5"/>
-                  <use href="#big-column" x="22"/>
-                  <use href="#big-column" x="27.5"/>
-                  <use href="#big-column" x="33"/>
-                  <use href="#big-column" x="38.5"/>
-              </g>
-
-              <g id="wing">
-                  <rect height="22" width="11.3" x="10.2" y="76.9"/>
-                  <path id="window" d="M 17.8 94.3 L 14.2 94.3 L 14.2 86.3 C 14.2 85.1 15 84.1 16 84.1 C 17 84.1 17.8 85.1 17.8 86.3 L 17.8 94.3" />
-              </g>
-
-              <rect id="wing-wall" height="18.9" width="6.2" x="4" y="80"/>
-              <rect id="wing-cornice" height="1" width="22" x="3" y="74.1"/>
-              <rect id="wing-second" height="8"  width="14.2" x="8.1" y="65.4"/>
-              <rect id="wing-third" height="4"  width="15" x="8.5" y="60.5" />
-              <path id="angel" d="M 10 61 Q 10 59.5 10.5 58.5 C 10 58 9 56 10 57 V 55 C 9 53 12 53 11 55 V 57 C 12 55 14 57 14 58 C 11 57 12 59 14 60 Z" />
-              <g id="statue">
-                  <rect id="statue-base" height="2.2"  width="2.2" x="3.7" y="72.5" />
-                  <path id="statue-figure" d="M 4.7 73 C 3 64 7 64 5.2 73Z"/>
-              </g>
-
-              <use href="#wing" x="68.3" />
-              <use href="#wing-wall" x="85.8" />
-              <use href="#wing-cornice" x="72" />
-              <use href="#wing-second" x="69.6" />
-              <use href="#wing-third" x="68" />
-              <use href="#angel" transform="translate(100) scale(-1 1)" />
-              <use href="#statue" x="90.4" />
-
-              <g id="belfry">
-                  <rect id="belfry-body" height="10" width="9" x="22.7" y="50.2"/>
-                  <path id="belfry-portico" d="M 23 49.5 L 23 48.5 C 23 48.4 23.1 48.3 23.2 48.2 L 27.1 45.9 L 27.4 45.9 L 31.3 48.2 C 31.4 48.3 31.5 48.4 31.5 48.5 L 31.5 49.5 Z"/>
-                  <path id="belfry-dome" d="M 24.4 46.3 C 24.4 43.9 25.8 42.3 27.4 42.3 C 29 42.3 30.3 43.9 30.3 46.3Z"/>
-                  <rect id="belfry-spire" height="6" width="0.3" x="27.3" y="36.3" />
-                  <rect id="belfry-base" height="6.9" width="10.6" x="21.9" y="60" />
-              </g>
-              <use href="#belfry" x="46.4" />
-              <g id="portico">
-                 <path d="M 73.8 70.8 L 27 70.8 L 27 68.7 L 50.3 58.5 L 50.5 58.5 L 50.5 58.5 L 73.8 68.8 L 73.8 70.8"/>
-              </g>
-          </g>
-          </symbol>
-
-          <!-- Затухание к краям корпуса -->
-          <linearGradient id="edge-fade">
-            <stop offset="0"    stop-color="black"/>
-            <stop offset="0.3"  stop-color="white"/>
-            <stop offset="0.7"  stop-color="white"/>
-            <stop offset="1"    stop-color="black"/>
-          </linearGradient>
-
-          <mask id="on-cup" maskUnits="userSpaceOnUse"
-                x="0" y="0" width="380" height="300">
-            <path d="M 199 25 C 265 25 319 30 319 37 L 298 175 H 82 L 79 37 C 79 30 133 25 199 25 Z" fill="url(#edge-fade)"/>
-          </mask>
-        </defs>
-
-        <g mask="url(#on-cup)">
-          <g id="pattern-strip">
-            <g id="pattern-set">
-              <use href="#isaac" x="-267"  y="60" width="100" height="100"/>
-              <use href="#isaac" x="-1021"  y="60" width="100" height="100"/>
-              <!-- if we add new symbols here we should
-              1. descrease its x coordinate by 754
-              2. increase translateX argument by 754 in @keyframes spin-pattern
-              3. increase animation time in #pattern-strip by 4s -->
-            </g>
-          </g>
-        </g>
-
-        <defs>
-            <mask id="behind-cup">
-                <rect x="0" y="0" width="380" height="300" fill="white"/>
-                <path id="cup-silhouette" d="M 199 25 C 265 25 319 30 319 37 L 298 175 H 82 L 79 37 C 79 30 133 25 199 25 Z" fill="black"/>
-            </mask>
-        </defs>
-
-        <g mask="url(#behind-cup)">
-            <g id="handle-x">
-              <g id="handle-y">
-              <path id="handle-edge" class="porcelain" d="M 0 17 C 5 22 3 87 2 99 S -1 111 -2 99 S -5 22 0 17 Z"/>
-                <g id="handle-shape">
-                  <path id="handle" class="porcelain" d="M 42 125 C 41 121 48 118 51 122 C 65 136 70 118 61 112 C 40 97 0 99 0 61 C 0 -16 107 30 56 38 C 49 39 53 28 48 24 C 37 16 12 31 17 64 C 23 105 56 90 68 110 C 80 141 44 141 42 125 H 42 Z" />
-                </g>
-              </g>
-            </g>
-        </g>
-
-        <path id="mug-left-contour" class="porcelain"  d="M 50 35 C 66 50 73 71 74 93 C 75 117 71 139 85 154 C 107 177 144 193 146 230 C 160 194 142 163 110 143 C 100 137 89 125 86 98 C 83 59 72 58 50 35 H 50 Z" />
-        <use href="#mug-left-contour" transform="translate(385) scale(-1 1)" />
-        <path id="mug-rim" class="porcelain"  d="M 265 56 C 227 57 126 60 78 45 C 131 71 256 63 265 56 Z" />
-        <path id="mug-cavity" class="porcelain"  d="M 199 25 C 265 25 319 30 319 37 C 319 43 265 48 199 48 C 133 48 79 43 79 37 C 79 30 133 25 199 25 Z" />
-        <path id="mug-base" class="porcelain" d="M 239 249 C 220 256 135 256 132 233 C 131 226 113 247 122 249 C 178 267 249 253 258 249 C 264 247 252 234 250 241 S 243 248 239 249 Z" />
-        <path id="saucer" class="porcelain"  d="M 97 225 C 50 230 9 238 9 254 C 9 271 71 292 195 292 C 309 292 371 271 371 254 C 371 238 330 230 283 225 C 308 226 376 229 376 258 C 376 276 304 300 195 300 C 76 300 4 276 4 258 C 4 229 74 226 97 225 H 97 Z" />
-</svg>
-  </div>
-
-  <div class="bar-track"><div class="bar-fill" id="fill"></div></div>
-  <div class="percent" id="pct">0 %</div>
-  <div class="done-msg" id="done">Чашечки загружены!</div>
-</div>
-
-<script>
-  const fill = document.getElementById('fill');
-  const pct  = document.getElementById('pct');
-  const done = document.getElementById('done');
-  const h1   = document.querySelector('h1');
-  let progress = 0;
-
-  const iv = setInterval(() => {
-    progress += Math.random() * 3 + 0.5;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(iv);
-      h1.textContent = 'Готово!';
-      done.style.display = 'block';
-    }
-    fill.style.width = progress + '%';
-    pct.textContent  = Math.floor(progress) + ' %';
-  }, 200);
-</script>
+  <a class="nav-btn" href="https://kirillsto.github.io/svag/cup/porcelain-progress.html">Porcelain Progress</a>
 </body>
 </html>
